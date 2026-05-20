@@ -23,6 +23,7 @@ public interface OrdererRepository extends JpaRepository<OrdererEntity, Integer>
 
     void deleteByOrderformId(Integer orderformId);
 
+    @EntityGraph(attributePaths = {"product", "orderform", "orderform.vendor"})
     List<OrdererEntity> findByOrderformId(Integer orderFormId);
 }
 

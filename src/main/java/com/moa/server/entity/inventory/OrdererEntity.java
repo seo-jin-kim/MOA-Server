@@ -63,8 +63,8 @@ public class OrdererEntity extends BaseEntity {
                 .stockInDate(this.orderform != null ? this.orderform.getStockInDate() : null)
                 .orderStatus(this.getOrderform() != null ? this.orderform.getOrderStatus() : null)
                 .vendorId(this.getOrderform() != null ? this.orderform.getVendorId() : null)
-                .vendorCord(this.getOrderform().getVendor()  != null ? this.orderform.getVendor().getVendorCord() : null)
-                .vendorName(this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorName() : null)
+                .vendorCord(this.getOrderform() != null && this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorCord() : null)
+                .vendorName(this.getOrderform() != null && this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorName() : null)
                 .totalPrice(calculatedPrice)
                 .build();
     }
@@ -88,8 +88,8 @@ public class OrdererEntity extends BaseEntity {
                 .stockInDate(this.orderform != null ? this.orderform.getStockInDate() : null)
                 .orderStatus(this.getOrderform() != null ? this.orderform.getOrderStatus() : null)
                 .vendorId(this.getOrderform() != null ? this.orderform.getVendorId() : null)
-                .vendorCord(this.getOrderform().getVendor()  != null ? this.orderform.getVendor().getVendorCord() : null)
-                .vendorName(this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorName() : null)
+                .vendorCord(this.getOrderform() != null && this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorCord() : null)
+                .vendorName(this.getOrderform() != null && this.getOrderform().getVendor() != null ? this.orderform.getVendor().getVendorName() : null)
                 .totalPrice(calculatedPrice)
                 .build();
     }
