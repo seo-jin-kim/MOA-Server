@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.CompanyAccountService;
 import com.moa.server.entity.salary.AllowanceEntity;
 import com.moa.server.entity.salary.CompanyAccountEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class CompanyAccountController {
     private final CompanyAccountService service;
 
     @GetMapping
-    public List<CompanyAccountEntity> list() {
-        return service.getList();
+    public Page<CompanyAccountEntity> list(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{companyAccountId}")
     public CompanyAccountEntity detail(@PathVariable Integer companyAccountId) {

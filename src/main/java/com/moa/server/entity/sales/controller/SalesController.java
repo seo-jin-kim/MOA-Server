@@ -5,6 +5,8 @@ import com.moa.server.entity.sales.dto.TransactionResponseDTO;
 import com.moa.server.entity.sales.dto.VendorMonthlyDTO;
 import com.moa.server.entity.sales.service.SalesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,8 @@ public class SalesController {
 
     //전체조회
     @GetMapping("/journals")
-    public ResponseEntity<List<TransactionResponseDTO>> getTransactions() {
-        return ResponseEntity.ok(salesService.getTransactions());
+    public ResponseEntity<Page<TransactionResponseDTO>> getTransactions(Pageable pageable) {
+        return ResponseEntity.ok(salesService.getTransactions(pageable));
     }
 
     //상세조회

@@ -2,6 +2,10 @@ package com.moa.server.entity.base.service;
 import com.moa.server.entity.user.AdminRoleEntity;
 import com.moa.server.entity.user.AdminRoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +15,10 @@ import java.util.List;
 public class AdminRoleService {
     private final AdminRoleRepository repository;
 
-    public List<AdminRoleEntity> getList() { return repository.findAll(); }
+    public Page<AdminRoleEntity> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("cord").descending());
+        return repository.findAll(pageable);
+    }
     public AdminRoleEntity getDetail(Integer id) {
         return repository.findById(id).orElse(null);
     }

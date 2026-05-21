@@ -4,6 +4,7 @@ import com.moa.server.entity.hr2.dto.BasicVacationDTO;
 import com.moa.server.entity.hr2.service.BasicVacationService;
 import com.moa.server.entity.vacation.BasicVacationEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class BasicVacationController {
     private final BasicVacationService service;
 
     @GetMapping
-    public List<BasicVacationDTO> list() {
-        return service.getList();
+    public Page<BasicVacationDTO> list(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{basicVacationId}")
     public BasicVacationDTO detail(@PathVariable Integer basicVacationId) {

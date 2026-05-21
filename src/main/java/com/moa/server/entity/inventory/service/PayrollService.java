@@ -335,11 +335,16 @@ public class PayrollService {
             salaryLedgerRepository.save(salaryLedger);
         }
 
-        transaction.setUpdatedAt(
-                transactionRequest.getUpdatedAt() == null ? LocalDateTime.now() : transactionRequest.getUpdatedAt()
-        );
+        if (Boolean.TRUE.equals(transactionRequest.getClearUpdatedAt())) {
+            transaction.setUpdatedAt(null);
+        } else if (transactionRequest.isUpdatedAtProvided()) {
+            transaction.setUpdatedAt(transactionRequest.getUpdatedAt());
+        }
 
-        return transactionRepository.save(transaction);
+        TransactionEntity savedTransaction = transactionRepository.save(transaction);
+        transactionRepository.flush();
+
+        return savedTransaction;
     }
 
     public void transactionSalaryDelete(Integer transactionId) {

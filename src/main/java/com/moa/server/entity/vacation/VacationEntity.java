@@ -1,6 +1,7 @@
 package com.moa.server.entity.vacation;
 
 import com.moa.server.common.BaseEntity;
+import com.moa.server.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,8 +21,13 @@ public class VacationEntity extends BaseEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "basic_vacation_id")
-    private Integer basicVacationId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private UserEntity user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "basic_vacation_id")
+    private BasicVacationEntity basicVacation;
 
     @Column(name = "use_vacation")
     private Integer useVacation;

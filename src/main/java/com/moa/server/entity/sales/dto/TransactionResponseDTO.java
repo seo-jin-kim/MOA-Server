@@ -20,4 +20,7 @@ public class TransactionResponseDTO {
     private Integer transactionPrice;
     private String transactionMemo;
     private String createdAt;
+
+
+
 }

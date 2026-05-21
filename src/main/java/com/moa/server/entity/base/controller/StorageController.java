@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.StorageService;
 import com.moa.server.entity.inventory.StorageEntity;
 import com.moa.server.entity.salary.AllowanceEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class StorageController {
     private final StorageService service;
 
     @GetMapping
-    public List<StorageEntity> list() {
-        return service.getList();
+    public Page<StorageEntity> list(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{storageId}")
     public StorageEntity detail(@PathVariable Integer storageId) {

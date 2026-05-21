@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.AllowanceService;
 import com.moa.server.entity.salary.AllowanceEntity;
 import com.moa.server.entity.user.AdminRoleEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class AllowanceController {
     private final AllowanceService service;
 
     @GetMapping
-    public List<AllowanceEntity> list() {
-        return service.getList();
+    public Page<AllowanceEntity> list(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{allowanceId}")
     public AllowanceEntity detail(@PathVariable Integer allowanceId) {

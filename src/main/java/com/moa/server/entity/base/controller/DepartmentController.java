@@ -6,6 +6,7 @@ import com.moa.server.entity.base.service.DepartmentService;
 import com.moa.server.entity.salary.AllowanceEntity;
 import com.moa.server.entity.user.DepartmentEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,10 @@ public class DepartmentController {
     private final DepartmentService service;
 
     @GetMapping
-    public List<DepartmentEntity> list() {
-        return service.getList();
+    public Page<DepartmentEntity> list(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{departmentId}")
     public DepartmentEntity detail(@PathVariable Integer departmentId) {

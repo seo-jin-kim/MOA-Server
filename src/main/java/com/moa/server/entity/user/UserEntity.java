@@ -1,6 +1,7 @@
 package com.moa.server.entity.user;
 
 import com.moa.server.common.BaseEntity;
+import com.moa.server.entity.approval.ApprovaEntity;
 import com.moa.server.entity.user.dto.AdminUserDTO;
 import com.moa.server.entity.user.dto.TeamUserDTO;
 import jakarta.persistence.*;
@@ -8,6 +9,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
@@ -85,6 +88,9 @@ public class UserEntity extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
     private DepartmentEntity department;
+
+    @OneToMany(mappedBy = "userWriter",fetch = FetchType.LAZY)
+    private List<ApprovaEntity> approva = new ArrayList<>();
 
     // InventoryEntity.java 내부 혹은 별도 Mapper
     public AdminUserDTO toDTO() {

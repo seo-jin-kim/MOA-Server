@@ -1,5 +1,6 @@
 package com.moa.server.entity.user;
 
+import com.moa.server.entity.hr2.dto.SelectMappingDTO;
 import com.moa.server.entity.user.dto.TeamUserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -102,6 +103,16 @@ public interface UserRepository extends  JpaRepository<UserEntity, Integer> {
     @Transactional
     @Query("UPDATE UserEntity u SET u.performance = :performance WHERE u.userId = :userId")
     int updateUserIdPerformance(Integer userId, String performance);
+
+    // 수정/등록 창 직원 선택용
+    @Query("SELECT u.employeeId, u.userName " +
+            "FROM UserEntity u " +
+            "WHERE u.userName LIKE CONCAT('%', :keyword, '%') OR u.employeeId LIKE CONCAT('%', :keyword, '%')")
+    List<Object[]> searchUserByKeyword(@Param("keyword") String keyword);
+
+    @Query("SELECT u.employeeId, u.userName " +
+            "FROM UserEntity u ")
+    List<Object[]> searchUser();
 
 //    boolean existsByEmployeeIdAndPassword(String employeeId, String password);
 //    UserEntity getUserByEmployeeId(String employeeId);

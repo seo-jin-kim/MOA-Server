@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.VendorService;
 import com.moa.server.entity.inventory.VendorEntity;
 import com.moa.server.entity.salary.AllowanceEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class VendorController {
     private final VendorService service;
 
     @GetMapping
-    public List<VendorEntity> list() {
-        return service.getList();
+    public Page<VendorEntity> list(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{vendorId}")
     public VendorEntity detail(@PathVariable Integer vendorId) {

@@ -1,6 +1,9 @@
 package com.moa.server.entity.inventory.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -61,4 +64,25 @@ public class TransactionSalaryRequestDTO {
 
     @JsonAlias("updated_at")
     private LocalDateTime updatedAt;
+
+    @JsonAlias("clear_updated_at")
+    private Boolean clearUpdatedAt;
+
+    @JsonIgnore
+    private Boolean updatedAtProvided;
+
+    @JsonSetter(value = "updatedAt", nulls = Nulls.SET)
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        this.updatedAtProvided = Boolean.TRUE;
+    }
+
+    @JsonSetter(value = "updated_at", nulls = Nulls.SET)
+    public void setUpdatedAtSnakeCase(LocalDateTime updatedAt) {
+        setUpdatedAt(updatedAt);
+    }
+
+    public boolean isUpdatedAtProvided() {
+        return Boolean.TRUE.equals(updatedAtProvided);
+    }
 }

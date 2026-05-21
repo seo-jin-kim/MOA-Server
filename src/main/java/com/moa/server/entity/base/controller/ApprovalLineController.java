@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.AllowanceService;
 import com.moa.server.entity.base.service.ApprovalLineService;
 import com.moa.server.entity.salary.AllowanceEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class ApprovalLineController {
     private final ApprovalLineService service;
 
     @GetMapping
-    public List<ApprovalLineEntity> list() {
-        return service.getList();
+    public Page<ApprovalLineEntity> list(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{approvalLineId}")
     public ApprovalLineEntity detail(@PathVariable Integer approvalLineId) {

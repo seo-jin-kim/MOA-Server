@@ -3,6 +3,10 @@ import com.moa.server.entity.salary.CompanyAccountEntity;
 import com.moa.server.entity.salary.CompanyAccountRepository;
 import com.moa.server.entity.user.AdminRoleEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +16,10 @@ import java.util.List;
 public class CompanyAccountService {
     private final CompanyAccountRepository repository;
 
-    public List<CompanyAccountEntity> getList() { return repository.findAll(); }
+    public Page<CompanyAccountEntity> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("companyAccountId").descending());
+        return repository.findAll(pageable);
+    }
     public CompanyAccountEntity getDetail(Integer companyAccountId) {
         return repository.findById(companyAccountId).orElse(null);
     }

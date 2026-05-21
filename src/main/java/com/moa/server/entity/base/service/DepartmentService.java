@@ -3,6 +3,10 @@ import com.moa.server.entity.user.AdminRoleEntity;
 import com.moa.server.entity.user.DepartmentEntity;
 import com.moa.server.entity.user.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +16,10 @@ import java.util.List;
 public class DepartmentService {
     private final DepartmentRepository repository;
 
-    public List<DepartmentEntity> getList() { return repository.findAll(); }
+    public Page<DepartmentEntity> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("departmentId").descending());
+        return repository.findAll(pageable);
+    }
     public DepartmentEntity getDetail(Integer departmentId) {
         return repository.findById(departmentId).orElse(null);
     }

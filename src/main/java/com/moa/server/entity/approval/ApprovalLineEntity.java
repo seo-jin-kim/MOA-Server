@@ -6,6 +6,8 @@ import com.moa.server.entity.inventory.dto.ProductCordMapDTO;
 import com.moa.server.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name = "approval_line")
@@ -32,6 +34,7 @@ public class ApprovalLineEntity extends BaseEntity {
     @Column(name = "approval_line_is_use")
     private Integer approvalLineIsUse;
 
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approval_line_user", insertable = false, updatable = false, referencedColumnName = "user_id")
     private UserEntity userApprover;

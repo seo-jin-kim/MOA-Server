@@ -7,6 +7,10 @@ import com.moa.server.entity.user.UserRepository;
 import com.moa.server.entity.vacation.BasicVacationEntity;
 import com.moa.server.entity.vacation.BasicVacationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +25,11 @@ public class BasicVacationService {
     private final GradeRepository gradeRepository;
     private final UserRepository userRepository;
 
-    public List<BasicVacationDTO> getList() {
-        return repository.findAll().stream()
-                .map(BasicVacationDTO::new)
-                .toList();
+    public Page<BasicVacationDTO> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("basicVacationDay").descending());
+
+        return repository.findAll(pageable)
+                .map(BasicVacationDTO::new);
     }
 
     public BasicVacationDTO getDetail(Integer basicVacationId) {

@@ -5,6 +5,7 @@ import com.moa.server.entity.base.service.ProductService;
 import com.moa.server.entity.inventory.ProductEntity;
 import com.moa.server.entity.salary.AllowanceEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    public List<ProductEntity> list() {
-        return service.getList();
+    public Page<ProductEntity> list(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "15") int size)
+    {
+        return service.getList(page, size);
     }
     @GetMapping("/{productId}")
     public ProductEntity detail(@PathVariable Integer productId) {

@@ -59,4 +59,7 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     List<TransactionEntity> findByUpdatedAtIsNotNull();
 
     Page<TransactionEntity> findByUpdatedAtIsNotNull(Pageable pageable);
+
+    Page<TransactionEntity> findAllByTransactionTypeOrderByTransactionIdDesc(String transactionType, Pageable pageable);
+
 }

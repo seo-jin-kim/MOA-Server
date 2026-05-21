@@ -5,6 +5,8 @@ import com.moa.server.entity.approval.dto.ApprovaUserDTO;
 import com.moa.server.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.time.LocalDateTime;
 
@@ -55,16 +57,19 @@ public class ApprovaEntity extends BaseEntity {
     private LocalDateTime updatedAt;
 
     //ApprovaEntity 와 join
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approva_kind", insertable = false, updatable = false, referencedColumnName = "document_id")
     private DocumentEntity line;
 
     //UserEntity 와 join
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer", insertable = false, updatable = false, referencedColumnName = "user_id")
     private UserEntity userWriter;
 
     //UserEntity 와 join
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approver", insertable = false, updatable = false, referencedColumnName = "approval_line_id")
     private ApprovalLineEntity lineApprover;

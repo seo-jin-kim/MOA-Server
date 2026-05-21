@@ -4,6 +4,10 @@ import com.moa.server.entity.inventory.VendorEntity;
 import com.moa.server.entity.inventory.VendorRepository;
 import com.moa.server.entity.user.AdminRoleEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +17,11 @@ import java.util.List;
 public class VendorService {
     private final VendorRepository repository;
 
-    public List<VendorEntity> getList() { return repository.findAll(); }
+    public Page<VendorEntity> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("vendorId").descending());
+
+        return repository.findAll(pageable);
+    }
     public VendorEntity getDetail(Integer vendorId) {
         return repository.findById(vendorId).orElse(null);
     }

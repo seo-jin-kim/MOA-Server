@@ -3,6 +3,10 @@ import com.moa.server.entity.inventory.StorageEntity;
 import com.moa.server.entity.inventory.StorageRepository;
 import com.moa.server.entity.user.AdminRoleEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +16,9 @@ import java.util.List;
 public class StorageService {
     private final StorageRepository repository;
 
-    public List<StorageEntity> getList() { return repository.findAll(); }
+    public Page<StorageEntity> getList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("storageId").descending());
+        return repository.findAll(pageable); }
     public StorageEntity getDetail(Integer storageId) {
         return repository.findById(storageId).orElse(null);
     }
