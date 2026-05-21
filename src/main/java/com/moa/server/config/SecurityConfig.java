@@ -24,8 +24,8 @@ public class SecurityConfig {
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setSameSite("None");
-        serializer.setUseSecureCookie(true); // HTTPS에서만 동작
+        serializer.setSameSite("Lax");
+        serializer.setUseSecureCookie(false); // HTTP에서도 동작
         // 브라우저가 쿠키를 '남'이라고 생각하지 않도록 경로 설정
         serializer.setCookiePath("/");
         return serializer;
@@ -55,6 +55,7 @@ public class SecurityConfig {
 
         configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:5173",
+                "http://168.107.38.96",
                 "https://moa-ivory.vercel.app",
                 "https://moa-git-j-mutajunes-projects.vercel.app",
                 "https://*.vercel.app"

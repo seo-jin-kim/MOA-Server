@@ -119,6 +119,7 @@ public class SalesService {
     }
 
     //전자세금계산서 조회
+    @Transactional(readOnly = true)
     public TaxInvoiceResponseDTO getTaxInvoice(Integer transactionId){
 
         TransactionEntity t = transactionRepository.findById(transactionId)
@@ -146,7 +147,7 @@ public class SalesService {
                 .receiverName(receiver.getVendorName())
                 .receiverCode(receiver.getVendorCord())
                 .transactionId(t.getTransactionId())
-                .transactionDate(t.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .transactionDate(t.getCreatedAt() != null ? t.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : "")
                 .supplyPrice(supplyPrice)
                 .tax(tax)
                 .totalPrice(totalPrice)
